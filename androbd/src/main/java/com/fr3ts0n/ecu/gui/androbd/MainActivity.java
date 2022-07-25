@@ -819,6 +819,8 @@ public class MainActivity extends PluginManager
                 setObdService(ObdProt.OBD_SVC_VEH_INFO, item.getTitle());
                 return true;
 
+                // so aparece depois que faz a conexao bluetooth
+
             case R.id.service_freezeframes:
                 setObdService(ObdProt.OBD_SVC_FREEZEFRAME, item.getTitle());
                 return true;
@@ -1611,45 +1613,48 @@ public class MainActivity extends PluginManager
                     break;
 
                 case ONLINE:
-                    switch (CommService.medium)
-                    {
-                        case BLUETOOTH:
-                            if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled())
-                            {
-                                Toast.makeText(this, getString(R.string.none_found), Toast.LENGTH_SHORT).show();
-                                mode = MODE.OFFLINE;
-                            } else
-                            {
-                                // if pre-settings shall be used ...
-                                String address = prefs.getString(PRESELECT.LAST_DEV_ADDRESS.toString(), null);
-                                if (istRestoreWanted(PRESELECT.LAST_DEV_ADDRESS)
-                                        && address != null)
-                                {
-                                    // ... connect with previously connected device
-                                    connectBtDevice(address, prefs.getBoolean("bt_secure_connection", false));
-                                } else
-                                {
-                                    // ... otherwise launch the BtDeviceListActivity to see devices and do scan
-                                    Intent serverIntent = new Intent(this, BtDeviceListActivity.class);
-                                    startActivityForResult(serverIntent,
-                                            prefs.getBoolean("bt_secure_connection", false)
-                                                    ? REQUEST_CONNECT_DEVICE_SECURE
-                                                    : REQUEST_CONNECT_DEVICE_INSECURE);
-                                }
-                            }
-                            break;
 
-                        case USB:
-                            Intent enableIntent = new Intent(this, UsbDeviceListActivity.class);
-                            startActivityForResult(enableIntent, REQUEST_CONNECT_DEVICE_USB);
-                            break;
-
-                        case NETWORK:
-                            connectNetworkDevice(prefs.getString(DEVICE_ADDRESS, null),
-                                    getPrefsInt(DEVICE_PORT, 23));
-                            break;
-                    }
+                    startDemoService();
                     break;
+//                    switch (CommService.medium)
+//                    {
+//                        case BLUETOOTH:
+//                            if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled())
+//                            {
+//                                Toast.makeText(this, getString(R.string.none_found), Toast.LENGTH_SHORT).show();
+//                                mode = MODE.OFFLINE;
+//                            } else
+//                            {
+//                                // if pre-settings shall be used ...
+//                                String address = prefs.getString(PRESELECT.LAST_DEV_ADDRESS.toString(), null);
+//                                if (istRestoreWanted(PRESELECT.LAST_DEV_ADDRESS)
+//                                        && address != null)
+//                                {
+//                                    // ... connect with previously connected device
+//                                    connectBtDevice(address, prefs.getBoolean("bt_secure_connection", false));
+//                                } else
+//                                {
+//                                    // ... otherwise launch the BtDeviceListActivity to see devices and do scan
+//                                    Intent serverIntent = new Intent(this, BtDeviceListActivity.class);
+//                                    startActivityForResult(serverIntent,
+//                                            prefs.getBoolean("bt_secure_connection", false)
+//                                                    ? REQUEST_CONNECT_DEVICE_SECURE
+//                                                    : REQUEST_CONNECT_DEVICE_INSECURE);
+//                                }
+//                            }
+//                            break;
+//
+//                        case USB:
+//                            Intent enableIntent = new Intent(this, UsbDeviceListActivity.class);
+//                            startActivityForResult(enableIntent, REQUEST_CONNECT_DEVICE_USB);
+//                            break;
+//
+//                        case NETWORK:
+//                            connectNetworkDevice(prefs.getString(DEVICE_ADDRESS, null),
+//                                    getPrefsInt(DEVICE_PORT, 23));
+//                            break;
+//                    }
+//                    break;
 
                 case DEMO:
                     startDemoService();

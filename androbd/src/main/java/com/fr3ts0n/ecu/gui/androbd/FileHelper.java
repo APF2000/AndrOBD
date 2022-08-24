@@ -196,6 +196,7 @@ class FileHelper
 			}
 		};
 		loadTask.start();
+		log.info("ARTHUR: LOADED TASK");
 	}
 
 	/**

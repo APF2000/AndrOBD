@@ -652,7 +652,7 @@ public class ElmProt
 		int result = 0;
 		String bufferStr = new String(buffer);
 		
-		log.fine(this.toString() + " RX:'" + bufferStr + "'");
+		log.fine("ARTHUR: " + this.toString() + " RX:'" + bufferStr + "'");
 		
 		// empty result
 		if (buffer.length == 0)
@@ -774,6 +774,7 @@ public class ElmProt
 					
 					case OK:
 					default:
+						log.info("ARTHUR last rx msg: " + lastTxMsg);
 						// if there is a pending data response, handle it now ...
 						if (responsePending)
 						{
@@ -915,6 +916,8 @@ public class ElmProt
 					// then remember the length to be expected
 					charsExpected = Integer.valueOf(bufferStr, 16) * 2;
 					lastRxMsg = "";
+					log.info("ARTHUR last rx msg BLANK: " + lastTxMsg);
+
 					return (result);
 				}
 				
@@ -948,12 +951,17 @@ public class ElmProt
 					{
 						// first line of a multiline message
 						lastRxMsg = bufferStr.substring(idx + 1);
+						log.info("ARTHUR last rx msg buffer str 0: " + lastTxMsg);
+
 					}
 					else
 					{
 						// continuation lines
 						// concat response without line counter
 						lastRxMsg += bufferStr.substring(idx + 1);
+
+						log.info("ARTHUR last rx msg buffsubstr idx+1: " + lastTxMsg);
+
 					}
 
 					/* no length known, set marker for pending response
@@ -987,6 +995,8 @@ public class ElmProt
 					result = handleDataMessage(lastRxMsg);
 				}
 		}
+		log.info("ARTHUR result: " + result);
+
 		return (result);
 	}
 	
@@ -1015,6 +1025,9 @@ public class ElmProt
 				// Let the OBD protocol handle the telegram
 				result = super.handleTelegram(lastRxMsg.toCharArray());
 		}
+
+		log.info("ARTHUR data message / elm prot : result: " + result);
+
 		return result;
 	}
 	

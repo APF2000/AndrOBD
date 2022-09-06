@@ -774,7 +774,7 @@ public class ElmProt
 					
 					case OK:
 					default:
-						log.info("ARTHUR last rx msg: " + lastTxMsg);
+						log.info("ARTHUR last tx msg: " + lastTxMsg);
 						// if there is a pending data response, handle it now ...
 						if (responsePending)
 						{

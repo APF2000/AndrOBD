@@ -411,6 +411,8 @@ public class ObdProt extends ProtoHeader
         for (Integer currPid : pidSupported)
         {
             Vector<EcuDataItem> items = dataItems.getPidDataItems(obdService, currPid);
+
+            log.fine("ARTHUR: items == NULL? " + items);
             // if no items defined, create dummy item
             if (items == null)
             {
@@ -464,6 +466,8 @@ public class ObdProt extends ProtoHeader
                 pidSupported.add(i + start + 1);
             }
         }
+
+        log.fine("ARTHUR: pidSupported" + pidSupported);
 
         log.fine(Long.toHexString(bitmask).toUpperCase()
                      + "(" + Long.toHexString(start) + "):"
@@ -620,6 +624,9 @@ public class ObdProt extends ProtoHeader
                                 // get payload data and mark the indicated supported PIDs
                                 long msgPayload = Long.valueOf(new String(buffer, offset, 8), 16);
                                 markSupportedPids(msgService, msgPid, msgPayload, PidPvs);
+
+                                log.fine("ARTHUR: verificar offset de PID, de 0x20 em 0x20");
+
                                 break;
 
                             // OBD number of fault codes

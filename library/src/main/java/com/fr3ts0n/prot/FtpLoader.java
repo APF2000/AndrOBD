@@ -18,6 +18,8 @@
 
 package com.fr3ts0n.prot;
 
+import com.fr3ts0n.ecu.prot.obd.Utils;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,6 +28,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Iterator;
 import java.util.Vector;
+
+import java.util.logging.Logger;
 
 /**
  * Threaded FTP Loader class to be used for threaded reading of an FTP stream
@@ -42,6 +46,9 @@ public class FtpLoader extends URLConnection
 	/** List of telegram listeners */
 	@SuppressWarnings("rawtypes")
 	private final Vector TelegramListeners = new Vector();
+
+	private static final String TAG = "AndrOBD";
+	private static final Logger log = Logger.getLogger(TAG);
 
 	/**
 	 * class constructor
@@ -123,6 +130,7 @@ public class FtpLoader extends URLConnection
 			currListener = it.next();
 			if (currListener instanceof TelegramListener)
 			{
+				log.info("ARTHUR buffer in func notifyTelegram in FtpLoader: " + Utils.toHex(buffer.toString()));
 				((TelegramListener) currListener).handleTelegram(buffer);
 			}
 		}

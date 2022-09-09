@@ -19,6 +19,7 @@
 package com.fr3ts0n.prot.gui;
 
 
+import com.fr3ts0n.ecu.prot.obd.Utils;
 import com.fr3ts0n.prot.ProtUtils;
 import com.fr3ts0n.prot.SerialExt;
 import com.fr3ts0n.prot.TelegramWriter;
@@ -379,6 +380,8 @@ public class KLHandler extends SerialHandler
 										log.fine("RX:" + ProtUtils.hexDumpBuffer(message.toCharArray()));
 										// update block counter with the received one
 										blockCounter = message.charAt(1);
+
+										log.info("ARTHUR message in func run in KLHandler: " + Utils.toHex(message));
 										// notify protocol handler of the new package
 										messageHandler.handleTelegram(message.toCharArray());
 										// clear the message

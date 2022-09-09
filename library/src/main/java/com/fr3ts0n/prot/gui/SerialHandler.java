@@ -18,6 +18,7 @@
 
 package com.fr3ts0n.prot.gui;
 
+import com.fr3ts0n.ecu.prot.obd.Utils;
 import com.fr3ts0n.prot.SerialExt;
 import com.fr3ts0n.prot.TelegramListener;
 import com.fr3ts0n.prot.TelegramWriter;
@@ -249,8 +250,10 @@ public class SerialHandler extends Thread
 						message += (char) chr;
 						// trigger message handling
 					case 10:
-						if (messageHandler != null)
+						if (messageHandler != null) {
+							log.info("ARTHUR message in func run in SerialHandler: " + Utils.toHex(message));
 							messageHandler.handleTelegram(message.toCharArray());
+						}
 						message = "";
 						break;
 

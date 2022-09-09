@@ -30,6 +30,7 @@ import android.hardware.usb.UsbManager;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 
+import com.fr3ts0n.ecu.prot.obd.Utils;
 import com.fr3ts0n.prot.ProtUtils;
 import com.fr3ts0n.prot.TelegramWriter;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
@@ -87,7 +88,10 @@ public class UsbCommService extends CommService
 							try
 							{
 								if(!message.isEmpty())
-								{ elm.handleTelegram(message.toCharArray()); }
+								{
+									log.info("ARTHUR message in func onNewData in UsbCommService: " + Utils.toHex(message));
+									elm.handleTelegram(message.toCharArray());
+								}
 							}
 							catch (Exception ex)
 							{

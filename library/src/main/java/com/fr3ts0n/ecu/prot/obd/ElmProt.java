@@ -21,6 +21,8 @@ package com.fr3ts0n.ecu.prot.obd;
 import com.fr3ts0n.prot.TelegramListener;
 import com.fr3ts0n.prot.TelegramWriter;
 
+//import org.apache.commons.codec.binary.Hex;
+
 import java.beans.PropertyChangeEvent;
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,7 +30,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
-
 
 /**
  * Communication protocol to talk to a ELM327 OBD interface
@@ -774,7 +775,8 @@ public class ElmProt
 					
 					case OK:
 					default:
-						log.info("ARTHUR last tx msg: " + lastTxMsg);
+						log.info("ARTHUR last tx msg: " + Utils.toHex(lastTxMsg));
+						log.info("ARTHUR last rx msg: " + Utils.toHex(lastRxMsg));
 						// if there is a pending data response, handle it now ...
 						if (responsePending)
 						{
@@ -916,7 +918,8 @@ public class ElmProt
 					// then remember the length to be expected
 					charsExpected = Integer.valueOf(bufferStr, 16) * 2;
 					lastRxMsg = "";
-					log.info("ARTHUR last rx msg BLANK: " + lastTxMsg);
+					log.info("ARTHUR last tx msg BLANK: " + Utils.toHex(lastTxMsg));
+					log.info("ARTHUR last rx msg BLANK: " + Utils.toHex(lastRxMsg));
 
 					return (result);
 				}
@@ -951,7 +954,8 @@ public class ElmProt
 					{
 						// first line of a multiline message
 						lastRxMsg = bufferStr.substring(idx + 1);
-						log.info("ARTHUR last rx msg buffer str 0: " + lastTxMsg);
+						log.info("ARTHUR last rx msg buffer str 0: " + Utils.toHex(lastRxMsg));
+						log.info("ARTHUR last tx msg buffer str 0: " + Utils.toHex(lastTxMsg));
 
 					}
 					else
@@ -960,7 +964,8 @@ public class ElmProt
 						// concat response without line counter
 						lastRxMsg += bufferStr.substring(idx + 1);
 
-						log.info("ARTHUR last rx msg buffsubstr idx+1: " + lastTxMsg);
+						log.info("ARTHUR last rx msg buffsubstr idx+1: " + Utils.toHex(lastRxMsg));
+						log.info("ARTHUR last tx msg buffsubstr idx+1: " + Utils.toHex(lastTxMsg));
 
 					}
 

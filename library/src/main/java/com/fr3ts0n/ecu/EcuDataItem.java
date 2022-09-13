@@ -131,6 +131,8 @@ public class EcuDataItem
 		pv.put(EcuDataPv.FID_FORMAT, fmt);
 		pv.put(EcuDataPv.FID_CNVID, cnv);
 		updateLimits(minValue, maxValue);
+
+		log.info("ARTHUR: new ecu data item created: " + this.toString());
 	}
 
 	/**

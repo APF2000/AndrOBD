@@ -775,8 +775,11 @@ public class ElmProt
 					
 					case OK:
 					default:
-						log.info("ARTHUR last tx msg: " + Utils.toHex(lastTxMsg));
-						log.info("ARTHUR last rx msg: " + Utils.toHex(lastRxMsg));
+						log.info("ARTHUR last tx msg: " + Utils.toHex(lastTxMsg) + " = " + lastTxMsg
+								+ " = " + Integer.valueOf(lastTxMsg) + " = " + Integer.toHexString(Integer.valueOf(lastTxMsg)));
+
+						log.info("ARTHUR last rx msg: " + Utils.toHex(lastRxMsg) + " = " + lastRxMsg
+								+ " = " + Integer.valueOf(lastRxMsg) + " = " + Integer.toHexString(Integer.valueOf(lastRxMsg)));
 						// if there is a pending data response, handle it now ...
 						if (responsePending)
 						{

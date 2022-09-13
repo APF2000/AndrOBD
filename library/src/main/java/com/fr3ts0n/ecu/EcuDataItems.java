@@ -163,6 +163,8 @@ public class EcuDataItems extends HashMap<Integer, HashMap<Integer, Vector<EcuDa
 				catch(NumberFormatException e) { /* ignore */	}
 				String label = Messages.getString(params[FLD.MNEMONIC.ordinal()],
 				                                  params[FLD.LABEL.ordinal()]);
+
+
 				// create linear conversion
 				newItm = new EcuDataItem(Integer.decode(params[FLD.PID.ordinal()]),
 										 Integer.parseInt(params[FLD.OFS.ordinal()]),
@@ -176,6 +178,8 @@ public class EcuDataItems extends HashMap<Integer, HashMap<Integer, Vector<EcuDa
 										 maxVal,
 										 label,
 					                     params[FLD.MNEMONIC.ordinal()]);
+
+				log.info("ARTHUR: create linear cinv ECUDATAITEM (pid, ofs, bit offset): " + newItm.toString());
 
 				// Add item to mnemonic map
 				byMnemonic.put(params[FLD.MNEMONIC.ordinal()], newItm);

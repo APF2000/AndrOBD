@@ -33,6 +33,7 @@ import com.fr3ts0n.androbd.plugin.mgr.PluginManager;
 import com.fr3ts0n.ecu.Conversion;
 import com.fr3ts0n.ecu.EcuDataItem;
 import com.fr3ts0n.ecu.EcuDataPv;
+import com.fr3ts0n.ecu.prot.obd.Utils;
 import com.fr3ts0n.pvs.IndexedProcessVar;
 import com.fr3ts0n.pvs.PvChangeEvent;
 import com.fr3ts0n.pvs.PvChangeListener;
@@ -46,6 +47,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * Adapter for OBD data items (PVs)
@@ -64,10 +66,17 @@ class ObdItemAdapter extends ArrayAdapter<Object>
     static boolean allowDataUpdates = true;
     private final transient SharedPreferences prefs;
 
+    private static final String TAG = "AndrOBD";
+    private static final Logger log = Logger.getLogger(TAG);
+
 
     public ObdItemAdapter(Context context, int resource, PvList pvs)
     {
         super(context, resource);
+        log.info("ARTHUR: new item adapter: resource: " + Utils.toHex(Integer.toString(resource)));
+        log.info("ARTHUR: new item adapter: context: " +  context.toString());
+        log.info("ARTHUR: new item adapter: pvs: " +  pvs.toString());
+
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -136,6 +145,8 @@ class ObdItemAdapter extends ArrayAdapter<Object>
      */
     private Collection<Object> getMatchingItems(PvList pvs, Set<String> pidsToShow)
     {
+        log.info("ARTHUR: getmatchingitem: pidstoshow: " + pidsToShow.toString());
+
         HashSet<Object> filtered = new HashSet<>();
         for (String key : pidsToShow)
         {
@@ -275,6 +286,8 @@ class ObdItemAdapter extends ArrayAdapter<Object>
      */
     protected synchronized void addAllDataSeries()
     {
+        log.info("ARTHUR: addAllDataSeries");
+
         StringBuilder pluginStr = new StringBuilder();
         for (int pos = 0; pos < getCount(); pos++)
         {
@@ -295,6 +308,7 @@ class ObdItemAdapter extends ArrayAdapter<Object>
                                            pv.get(EcuDataPv.FID_UNITS)
             ));
         }
+        log.info("ARTHUR: obditemadapter pluginstr: " + pluginStr.toString());
 
         // notify plugins
         if (PluginManager.pluginHandler != null)
@@ -306,6 +320,7 @@ class ObdItemAdapter extends ArrayAdapter<Object>
     @Override
     public void addAll(Collection<?> collection)
     {
+        log.info("ARTHUR: addAll collection: " + collection.toString());
         super.addAll(collection);
         // get array sorted
         sort(pidSorter);

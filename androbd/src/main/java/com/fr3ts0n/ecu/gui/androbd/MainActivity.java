@@ -327,6 +327,7 @@ public class MainActivity extends PluginManager
 
                     // data has been read - finish up
                     case MESSAGE_FILE_READ:
+                        log.info("ARTHUR: data has been read");
                         // set listeners for data structure changes
                         setDataListeners();
                         // set adapters data source to loaded list instances
